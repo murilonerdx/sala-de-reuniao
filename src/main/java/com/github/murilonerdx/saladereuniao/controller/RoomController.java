@@ -32,18 +32,17 @@ public class RoomController {
         return repository.save(room);
     }
 
-    @PutMapping("/room/{id}")
+    @PutMapping("/rooms/{id}")
     public ResponseEntity<Room> updateRoom(@PathVariable(value="id") Long roomId, @RequestBody Room roomPut) throws ResourceNotFoundException{
         Room room = repository.findById(roomId).orElseThrow(()-> new ResourceNotFoundException("Room id not found:: " + roomId));
         room.setName(roomPut.getName());
         room.setEndHour(roomPut.getEndHour());
         room.setStartHour(roomPut.getStartHour());
-        room.setId(roomId);
         final Room updateRoom = repository.save(room);
         return ResponseEntity.ok(updateRoom);
     }
 
-    @DeleteMapping("/room/{id}")
+    @DeleteMapping("/rooms/{id}")
     public ResponseEntity<?> deleteRoom(@PathVariable(value="id") Long idRoom) throws ResourceNotFoundException {
         repository.findById(idRoom).orElseThrow(()-> new ResourceNotFoundException("Room id not found:: " + idRoom));
         repository.deleteById(idRoom);
